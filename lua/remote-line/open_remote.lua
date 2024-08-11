@@ -23,7 +23,6 @@ local function get_remote_url()
   end
 
 function M.open()
-  print("Open remote!!")
 
   local remote_url = get_remote_url()
   print(remote_url)
