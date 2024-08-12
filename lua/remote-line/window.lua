@@ -3,12 +3,12 @@ local open_remote = require("remote-line.open_remote")
 local M = {}
 
 -- TODO: Refactor this into a local function
-function SelectOption(buf, win)
+function SelectOption(buf, win, currentCursorLine, firstLine, path)
   local row = vim.api.nvim_win_get_cursor(win)[1]
   local line = vim.api.nvim_buf_get_lines(buf, row - 1, row, false)[1]
 
   if line == "1. Open remote repository for selected rows" then
-    open_remote.open()
+    open_remote.open(currentCursorLine, firstLine, path)
   elseif line == "2. fuga" then
     print("fuga")
   elseif line == "3. pigya" then
@@ -18,7 +18,7 @@ function SelectOption(buf, win)
   vim.api.nvim_win_close(win, true)
 end
 
-function M.menu()
+function M.menu(firstLine, lastLine, path)
   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
   local content = { "1. Open remote repository for selected rows", "2. fuga", "3. pigya" }
   local width = 100
@@ -42,7 +42,7 @@ function M.menu()
     buf,
     "n",
     "<CR>",
-    [[<cmd>lua SelectOption(]] .. buf .. [[, ]] .. win .. [[)<CR>]],
+    "<cmd>lua SelectOption(" .. buf .. ", " .. win .. ", " .. firstLine .. ", " .. lastLine .. ", '" .. path .. "')<CR>",
     { noremap = true, silent = true }
   )
 end
