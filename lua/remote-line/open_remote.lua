@@ -100,10 +100,22 @@ local function gh_exec_cmd(url)
   end
 end
 
+local function url_clipboard(url)
+  if vim.fn.has("macunix") == 1 then
+    vim.fn.system("echo " .. vim.fn.shellescape(url) .. " | pbcopy")
+  elseif vim.fn.has("unix") == 1 then
+    vim.fn.system("echo " .. vim.fn.shellescape(url) .. " | xclip -selection clipboard")
+  elseif vim.fn.has("win32") == 1 then
+    vim.fn.system("echo " .. vim.fn.shellescape(url) .. " | clip")
+  end
+end
+
 function M.open(firstLine, lastLine, path)
   local remote_url = get_remote_url()
 
-  if not remote_url then return end
+  if not remote_url then
+    return
+  end
 
   -- TODO I want to be able to choose the action for this.
   local action = "blob"
@@ -112,6 +124,24 @@ function M.open(firstLine, lastLine, path)
   local url = generate_url(remote_url, action, commit, relative, firstLine, lastLine)
 
   gh_exec_cmd(url)
+end
+
+-- TODO: the pre-processing is the same as for 'open', so it should be unified.
+function M.copy(firstLine, lastLine, path)
+  local remote_url = get_remote_url()
+
+  if not remote_url then
+    return
+  end
+
+  -- TODO I want to be able to choose the action for this.
+  local action = "blob"
+  local commit, relative = get_git_info(path)
+
+  local url = generate_url(remote_url, action, commit, relative, firstLine, lastLine)
+
+  url_clipboard(url)
+  print("success to copy the URL to clipboard")
 end
 
 return M

@@ -9,8 +9,8 @@ function SelectOption(buf, win, currentCursorLine, firstLine, path)
 
   if line == "1. Open remote repository for selected rows" then
     open_remote.open(currentCursorLine, firstLine, path)
-  elseif line == "2. fuga" then
-    print("fuga")
+  elseif line == "2. current line remote repository URL to clipboard" then
+    open_remote.copy(currentCursorLine, firstLine, path)
   elseif line == "3. pigya" then
     print("pigya")
   end
@@ -20,7 +20,11 @@ end
 
 function M.menu(firstLine, lastLine, path)
   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
-  local content = { "1. Open remote repository for selected rows", "2. fuga", "3. pigya" }
+  local content = { 
+    "1. Open remote repository for selected rows",
+    "2. current line remote repository URL to clipboard",
+    "3. pigya"
+  }
   local width = 100
   local height = #content
   local opts = {
