@@ -1,4 +1,4 @@
-local open_remote = require("remote-line.open_remote")
+local remote = require("remote-line.remote")
 
 local M = {}
 
@@ -8,9 +8,9 @@ function SelectOption(buf, win, currentCursorLine, firstLine, path)
   local line = vim.api.nvim_buf_get_lines(buf, row - 1, row, false)[1]
 
   if line == "1. Open remote repository for selected rows" then
-    open_remote.open(currentCursorLine, firstLine, path)
+    remote.open(currentCursorLine, firstLine, path)
   elseif line == "2. current line remote repository URL to clipboard" then
-    open_remote.copy(currentCursorLine, firstLine, path)
+    remote.copy(currentCursorLine, firstLine, path)
   elseif line == "3. pigya" then
     print("pigya")
   end
