@@ -88,29 +88,7 @@ local function generate_url(remote_url, action, commit, relative, firstLine, las
   return url
 end
 
-local function gh_exec_cmd(url)
-  if vim.fn.has("macunix") == 1 then
-    vim.fn.system("open " .. url)
-  elseif vim.fn.has("unix") == 1 then
-    vim.fn.system("xdg-open " .. url)
-  elseif vim.fn.has("win32") == 1 then
-    os.execute("start " .. url)
-  else
-    print("Unsupported OS")
-  end
-end
-
-local function url_clipboard(url)
-  if vim.fn.has("macunix") == 1 then
-    vim.fn.system("echo " .. vim.fn.shellescape(url) .. " | pbcopy")
-  elseif vim.fn.has("unix") == 1 then
-    vim.fn.system("echo " .. vim.fn.shellescape(url) .. " | xclip -selection clipboard")
-  elseif vim.fn.has("win32") == 1 then
-    vim.fn.system("echo " .. vim.fn.shellescape(url) .. " | clip")
-  end
-end
-
-function M.open(firstLine, lastLine, path)
+function M.url(firstLine, lastLine, path)
   local remote_url = get_remote_url()
 
   if not remote_url then
@@ -121,27 +99,7 @@ function M.open(firstLine, lastLine, path)
   local action = "blob"
   local commit, relative = get_git_info(path)
 
-  local url = generate_url(remote_url, action, commit, relative, firstLine, lastLine)
-
-  gh_exec_cmd(url)
-end
-
--- TODO: the pre-processing is the same as for 'open', so it should be unified.
-function M.copy(firstLine, lastLine, path)
-  local remote_url = get_remote_url()
-
-  if not remote_url then
-    return
-  end
-
-  -- TODO I want to be able to choose the action for this.
-  local action = "blob"
-  local commit, relative = get_git_info(path)
-
-  local url = generate_url(remote_url, action, commit, relative, firstLine, lastLine)
-
-  url_clipboard(url)
-  print("success to copy the URL to clipboard")
+  return generate_url(remote_url, action, commit, relative, firstLine, lastLine)
 end
 
 return M
