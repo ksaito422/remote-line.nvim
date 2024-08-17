@@ -2,7 +2,7 @@ local generate = require("remote-line.generate")
 
 local M = {}
 
-local function gh_exec_cmd(url)
+local function open_remote(url)
   if vim.fn.has("macunix") == 1 then
     vim.fn.system("open " .. url)
   elseif vim.fn.has("unix") == 1 then
@@ -27,7 +27,7 @@ end
 function M.open(firstLine, lastLine, path, action)
   local url = generate.url(firstLine, lastLine, path, action)
 
-  gh_exec_cmd(url)
+  open_remote(url)
 end
 
 function M.copy(firstLine, lastLine, path, action)

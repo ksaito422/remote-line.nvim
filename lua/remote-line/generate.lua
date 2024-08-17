@@ -43,13 +43,7 @@ local function get_remote_url()
     end)
   end
 
-  local rl_git_remote = vim.g.rl_git_remote or remote
-
-  if rl_git_remote == "" then
-    return nil
-  end
-
-  local remote_url = vim.fn.system(cdDir .. "git config --get remote." .. rl_git_remote .. ".url")
+  local remote_url = vim.fn.system(cdDir .. "git config --get remote." .. remote .. ".url")
   remote_url = vim.fn.trim(remote_url)
 
   return remote_url
