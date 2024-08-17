@@ -24,14 +24,14 @@ local function url_clipboard(url)
   end
 end
 
-function M.open(firstLine, lastLine, path)
-  local url = generate.url(firstLine, lastLine, path)
+function M.open(firstLine, lastLine, path, action)
+  local url = generate.url(firstLine, lastLine, path, action)
 
   gh_exec_cmd(url)
 end
 
-function M.copy(firstLine, lastLine, path)
-  local url = generate.url(firstLine, lastLine, path)
+function M.copy(firstLine, lastLine, path, action)
+  local url = generate.url(firstLine, lastLine, path, action)
 
   url_clipboard(url)
   print("success to copy the URL to clipboard")
