@@ -7,9 +7,9 @@ function SelectOption(buf, win, currentCursorLine, firstLine, path)
   local row = vim.api.nvim_win_get_cursor(win)[1]
   local line = vim.api.nvim_buf_get_lines(buf, row - 1, row, false)[1]
 
-  if line == "1. Open remote repository for selected rows" then
+  if line == "1. Open remote repository in blob" then
     remote.open(currentCursorLine, firstLine, path, "blob")
-  elseif line == "2. current line remote repository URL to clipboard" then
+  elseif line == "2. Copy remote repository URL" then
     remote.copy(currentCursorLine, firstLine, path, "blob")
   elseif line == "3. Open remote repository in blame" then
     remote.open(currentCursorLine, firstLine, path, "blame")
@@ -21,8 +21,8 @@ end
 function M.menu(firstLine, lastLine, path)
   local row, col = unpack(vim.api.nvim_win_get_cursor(0))
   local content = {
-    "1. Open remote repository for selected rows",
-    "2. current line remote repository URL to clipboard",
+    "1. Open remote repository in blob",
+    "2. Copy remote repository URL",
     "3. Open remote repository in blame",
   }
   local width = 100
