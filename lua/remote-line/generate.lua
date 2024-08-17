@@ -88,15 +88,13 @@ local function generate_url(remote_url, action, commit, relative, firstLine, las
   return url
 end
 
-function M.url(firstLine, lastLine, path)
+function M.url(firstLine, lastLine, path, action)
   local remote_url = get_remote_url()
 
   if not remote_url then
     return
   end
 
-  -- TODO I want to be able to choose the action for this.
-  local action = "blob"
   local commit, relative = get_git_info(path)
 
   return generate_url(remote_url, action, commit, relative, firstLine, lastLine)
