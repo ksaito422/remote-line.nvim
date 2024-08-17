@@ -31,7 +31,19 @@ local function get_remote_url()
     return nil
   end
 
-  local rl_git_remote = vim.g.rl_git_remote or remote_list[1]
+  local remote = remote_list[1]
+  -- NOTE:Even if only one remote is registered, the remote list has two values
+  if #remote_list >= 3 then
+    vim.ui.select(remote_list, {
+      prompt = "Select remote",
+    }, function(selected)
+      if selected then
+        remote = selected
+      end
+    end)
+  end
+
+  local rl_git_remote = vim.g.rl_git_remote or remote
 
   if rl_git_remote == "" then
     return nil
