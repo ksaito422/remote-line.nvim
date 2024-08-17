@@ -31,9 +31,13 @@ local function get_remote_url()
     return nil
   end
 
+  -- NOTE: Remove the last empty string
+  if remote_list[#remote_list] == "" then
+    table.remove(remote_list, #remote_list)
+  end
+
   local remote = remote_list[1]
-  -- NOTE:Even if only one remote is registered, the remote list has two values
-  if #remote_list >= 3 then
+  if #remote_list >= 2 then
     vim.ui.select(remote_list, {
       prompt = "Select remote",
     }, function(selected)
