@@ -13,6 +13,8 @@ function SelectOption(buf, win, currentCursorLine, firstLine, path)
     remote.copy(currentCursorLine, firstLine, path, "blob")
   elseif line == "3. Open remote repository in blame" then
     remote.open(currentCursorLine, firstLine, path, "blame")
+  elseif line == "4. Open pull request the last changed commit" then
+    remote.open(currentCursorLine, firstLine, path, "pull")
   end
 
   vim.api.nvim_win_close(win, true)
@@ -23,6 +25,7 @@ function M.menu(firstLine, lastLine, path)
     "1. Open remote repository in blob",
     "2. Copy remote repository URL",
     "3. Open remote repository in blame",
+    "4. Open pull request the last changed commit"
   }
   local width = 100
   local height = #content

@@ -27,6 +27,10 @@ end
 function M.open(firstLine, lastLine, path, action)
   local url = generate.url(firstLine, lastLine, path, action)
 
+  if url == "" then
+    return
+  end
+
   open_remote(url)
 end
 
