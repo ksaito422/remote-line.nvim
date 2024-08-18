@@ -25,7 +25,7 @@ function M.menu(firstLine, lastLine, path)
     "1. Open remote repository in blob",
     "2. Copy remote repository URL",
     "3. Open remote repository in blame",
-    "4. Open pull request the last changed commit"
+    "4. Open pull request the last changed commit",
   }
   local width = 100
   local height = #content

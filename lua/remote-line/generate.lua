@@ -59,7 +59,9 @@ local function generate_url(remote_url, action, commit, relative, firstLine, las
 
   -- TODO: want to refactor
   if action == "pull" then
-    local commit_hash = vim.fn.system("git blame -L " .. firstLine .. "," .. firstLine .. " ".. relative .. " -s | awk '{print $1}' | tr -d '\n'")
+    local commit_hash = vim.fn.system(
+      "git blame -L " .. firstLine .. "," .. firstLine .. " " .. relative .. " -s | awk '{print $1}' | tr -d '\n'"
+    )
     url = vim.fn.system("gh search prs " .. commit_hash .. " --json url | jq '.[].url'")
 
     if url == "" then
