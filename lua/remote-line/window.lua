@@ -19,7 +19,6 @@ function SelectOption(buf, win, currentCursorLine, firstLine, path)
 end
 
 function M.menu(firstLine, lastLine, path)
-  local _, col = unpack(vim.api.nvim_win_get_cursor(0))
   local content = {
     "1. Open remote repository in blob",
     "2. Copy remote repository URL",
@@ -30,7 +29,7 @@ function M.menu(firstLine, lastLine, path)
   local opts = {
     relative = "cursor",
     row = 1,
-    col = col,
+    col = 1,
     width = width,
     height = height,
     style = "minimal",
