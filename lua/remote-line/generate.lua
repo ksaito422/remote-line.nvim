@@ -57,6 +57,18 @@ local function generate_url(remote_url, action, commit, relative, firstLine, las
   local url = ""
   local lineRange = ""
 
+  -- TODO: want to refactor
+  if action == "pull" then
+    local commit_hash = vim.fn.system("git blame -L " .. firstLine .. "," .. firstLine .. " ".. relative .. " -s | awk '{print $1}' | tr -d '\n'")
+    url = vim.fn.system("gh search prs " .. commit_hash .. " --json url | jq '.[].url'")
+
+    if url == "" then
+      print("The PR is not found")
+      return url
+    end
+    return vim.fn.system("gh search prs " .. commit_hash .. " --json url | jq '.[].url'")
+  end
+
   local function is_github(remote_url)
     return string.match(remote_url, "github")
   end
