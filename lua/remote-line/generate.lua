@@ -65,7 +65,7 @@ local function generate_url(remote_url, action, commit, relative, firstLine, las
     url = vim.fn.system("gh search prs " .. commit_hash .. " --json url | jq '.[].url'")
 
     if url == "" then
-      print("The PR is not found")
+      print("No pull request containing '" .. commit_hash .. "' was found")
       return url
     end
     return vim.fn.system("gh search prs " .. commit_hash .. " --json url | jq '.[].url'")
