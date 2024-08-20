@@ -25,8 +25,10 @@ require("lazy").setup({
 ```
 
 ## ⚡️Requirements
-- [gh](https://cli.github.com/)
-- [jq](https://github.com/jqlang/jq)
+- (optional)[gh](https://cli.github.com/)
+- (optional)[jq](https://github.com/jqlang/jq)
+- (optional)[luarocks](https://luarocks.org/)
+  - (optional)[busted](https://github.com/lunarmodules/busted)
 
 ## 📦Usage
 
