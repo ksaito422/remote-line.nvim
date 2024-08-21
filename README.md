@@ -1,6 +1,10 @@
 # remote-line.nvim
 Open current line on remote repository.
 
+<a href="https://dotfyle.com/plugins/ksaito422/remote-line.nvim">
+	<img src="https://dotfyle.com/plugins/ksaito422/remote-line.nvim/shield?style=for-the-badge" />
+</a>
+
 ## 🚀Features
 
 - Open the currently selected line in the remote repository
