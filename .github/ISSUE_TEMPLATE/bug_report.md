@@ -1,13 +1,12 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: ''
 labels: bug
 assignees: ''
 
 ---
 
-**Neovim version(nvim -v)**
+**Neovim version(`nvim -v`)**
 0.10.0
 
 **Operating System/version**
