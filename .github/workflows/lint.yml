@@ -16,3 +16,13 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           args: --display-style=quiet .
 
+  style-lint:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: JohnnyMorganz/stylua-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: 0.20.0
+          args: --check .
