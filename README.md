@@ -1,9 +1,18 @@
 # remote-line.nvim
-Open current line on remote repository.
 
-<a href="https://dotfyle.com/plugins/ksaito422/remote-line.nvim">
-	<img src="https://dotfyle.com/plugins/ksaito422/remote-line.nvim/shield?style=for-the-badge" />
-</a>
+<div align="center"><p>
+  <a href="https://github.com/ksaito422/remote-line.nvim/releases/latest">
+    <img alt="Latest release" src="https://img.shields.io/github/v/release/ksaito422/remote-line.nvim?style=for-the-badge&logo=startrek&color=C9CBFF&logoColor=D9E0EE&labelColor=302D41&include_prerelease&sort=semver" />
+  </a>
+  <a href="https://github.com/ksaito422/remote-line.nvim/pulse">
+    <img alt="Last commit" src="https://img.shields.io/github/last-commit/ksaito422/remote-line.nvim?style=for-the-badge&logo=lightning&color=8bd5ca&logoColor=D9E0EE&labelColor=302D41"/>
+  </a>
+  <a href="https://github.com/ksaito422/remote-line.nvim/actions/workflows/test.yml">
+    <img alt="CI Status Badge" src="https://img.shields.io/github/actions/workflow/status/ksaito422/remote-line.nvim/test.yml?style=for-the-badge&logo=github&color=8bd5ca&logoColor=D9E0EE&labelColor=302D41" />
+  </a>
+</div>
+
+Open current line on remote repository.
 
 ## 🚀Features
 
