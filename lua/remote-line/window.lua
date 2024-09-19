@@ -2,8 +2,7 @@ local remote = require("remote-line.remote")
 
 local M = {}
 
--- TODO: Refactor this into a local function
-function SelectOption(buf, win, currentCursorLine, firstLine, path)
+local function select_option(buf, win, currentCursorLine, firstLine, path)
   local row = vim.api.nvim_win_get_cursor(win)[1]
   local line = vim.api.nvim_buf_get_lines(buf, row - 1, row, false)[1]
 
@@ -43,14 +42,10 @@ function M.menu(firstLine, lastLine, path)
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, content)
   local win = vim.api.nvim_open_win(buf, true, opts)
 
-  vim.api.nvim_buf_set_keymap(buf, "n", "q", ":q<CR>", { noremap = true, silent = true })
-  vim.api.nvim_buf_set_keymap(
-    buf,
-    "n",
-    "<CR>",
-    "<cmd>lua SelectOption(" .. buf .. ", " .. win .. ", " .. firstLine .. ", " .. lastLine .. ", '" .. path .. "')<CR>",
-    { noremap = true, silent = true }
-  )
+  vim.keymap.set("n", "q", ":q<CR>", { noremap = true, silent = true })
+  vim.keymap.set("n", "<CR>", function()
+    select_option(buf, win, firstLine, lastLine, path)
+  end, { noremap = true, silent = true, buffer = buf })
 end
 
 return M

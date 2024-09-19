@@ -23,7 +23,7 @@ end
 local function get_remote_url()
   local fileDir = vim.fn.expand("%:p:h")
   local cdDir = string.format("cd %s; ", fileDir)
-  local remotes = vim.fn.system(string.format(cdDir .. "git remote"))
+  local remotes = vim.fn.system(string.format("%s git remote", cdDir))
   local remote_list = vim.split(remotes, "\n")
 
   if #remote_list == 0 then
@@ -53,6 +53,18 @@ local function get_remote_url()
   return remote_url
 end
 
+local function github_line_range(firstLine, lastLine)
+  if firstLine == lastLine then
+    return "L" .. firstLine
+  else
+    return "L" .. firstLine .. "-L" .. lastLine
+  end
+end
+
+local function is_github(remote_url)
+  return string.match(remote_url, "github")
+end
+
 local function generate_url(remote_url, action, commit, relative, firstLine, lastLine)
   local url = ""
   local lineRange = ""
@@ -69,18 +81,6 @@ local function generate_url(remote_url, action, commit, relative, firstLine, las
       return url
     end
     return vim.fn.system("gh search prs " .. commit_hash .. " --json url | jq '.[].url'")
-  end
-
-  local function is_github(remote_url)
-    return string.match(remote_url, "github")
-  end
-
-  local function github_line_range(firstLine, lastLine)
-    if firstLine == lastLine then
-      return "L" .. firstLine
-    else
-      return "L" .. firstLine .. "-L" .. lastLine
-    end
   end
 
   local function github_url(remote)
