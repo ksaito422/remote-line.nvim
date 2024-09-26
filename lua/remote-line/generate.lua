@@ -36,16 +36,16 @@ local function get_remote_url()
     table.remove(remote_list, #remote_list)
   end
 
-  local remote = remote_list[1]
-  if #remote_list >= 2 then
+  if not vim.g.remote_line_git_remote_repository and #remote_list >= 2 then
     vim.ui.select(remote_list, {
       prompt = "Select remote",
     }, function(selected)
       if selected then
-        remote = selected
+        vim.g.remote_line_git_remote_repository = selected
       end
     end)
   end
+  local remote = vim.g.remote_line_git_remote_repository or remote_list[1]
 
   local remote_url = vim.fn.system(cdDir .. "git config --get remote." .. remote .. ".url")
   remote_url = vim.fn.trim(remote_url)
