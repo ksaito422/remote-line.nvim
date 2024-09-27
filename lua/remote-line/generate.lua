@@ -45,6 +45,16 @@ local function get_remote_url()
       end
     end)
   end
+
+  if vim.g.remote_line_git_remote_repository and not vim.tbl_contains(remote_list, vim.g.remote_line_git_remote_repository) then
+    error(
+      "The remote"
+      .. string.format(" `%s`", vim.g.remote_line_git_remote_repository)
+      .. " does not exist in the repository."
+      .. " Please correct the value set for `remote_line_git_remote_repository`."
+    )
+  end
+
   local remote = vim.g.remote_line_git_remote_repository or remote_list[1]
 
   local remote_url = vim.fn.system(cdDir .. "git config --get remote." .. remote .. ".url")
