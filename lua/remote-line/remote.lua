@@ -21,6 +21,8 @@ local function url_clipboard(url)
     vim.fn.system("echo " .. vim.fn.shellescape(url) .. " | xclip -selection clipboard")
   elseif vim.fn.has("win32") == 1 then
     vim.fn.system("echo " .. vim.fn.shellescape(url) .. " | clip")
+  else
+    print("Unsupported OS")
   end
 end
 
