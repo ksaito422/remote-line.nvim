@@ -37,12 +37,13 @@ require("lazy").setup({
 ```
 
 ## ⚡️Requirements
-- (optional)[gh](https://cli.github.com/)
-- (optional)[jq](https://github.com/jqlang/jq)
-- (optional)[luarocks](https://luarocks.org/)
-  - (optional)[busted](https://github.com/lunarmodules/busted)
+- [gh](https://cli.github.com/)(optional)
+- [jq](https://github.com/jqlang/jq)(optional)
 
 ## 📦Usage
 
 Available via `RemoteLine` command.
 
+## ⌨️Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/ksaito422/remote-line.nvim.
