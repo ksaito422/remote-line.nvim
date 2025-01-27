@@ -1,6 +1,6 @@
 local M = {}
 
-local function get_git_info(path)
+function M.get_git_info(path)
   local fileDir = vim.fn.expand("%:p:h")
   local cdDir = string.format("cd %s; ", fileDir)
 
@@ -134,26 +134,15 @@ function M.url(firstLine, lastLine, path, action, mode)
     return
   end
 
-  local commit, branch, relative = get_git_info(path)
-  local url = ""
+  local commit, branch, relative = M.get_git_info(path)
 
   if mode == "commit" then
-    url = generate_url(remote_url, action, commit, relative, firstLine, lastLine)
+    return generate_url(remote_url, action, commit, relative, firstLine, lastLine)
   elseif mode == "branch" then
-    url = generate_url(remote_url, action, branch, relative, firstLine, lastLine)
+    return generate_url(remote_url, action, branch, relative, firstLine, lastLine)
   else
-    -- Ask user to choose between commit hash or branch name
-    vim.ui.select({"Commit", "Branch"}, {
-      prompt = "Select reference type:",
-    }, function(choice)
-      if choice == "Commit" then
-        url = generate_url(remote_url, action, commit, relative, firstLine, lastLine)
-      elseif choice == "Branch" then
-        url = generate_url(remote_url, action, branch, relative, firstLine, lastLine)
-      end
-    end)
+    print("Please specify the reference type: commit or branch")
   end
-  return url
 end
 
 return M
