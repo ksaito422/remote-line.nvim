@@ -20,6 +20,10 @@ local function select_option(buf, win, currentCursorLine, firstLine, path, mode)
 end
 
 function M.menu(firstLine, lastLine, path, mode)
+  if not mode or mode == "" then
+    mode = "commit" -- set default mode to commit
+  end
+
   local content = {
     "1. Open remote repository in blob",
     "2. Copy remote repository URL",
