@@ -1,10 +1,11 @@
 local M = {}
 
-local function get_git_info(path)
+function M.get_git_info(path)
   local fileDir = vim.fn.expand("%:p:h")
   local cdDir = string.format("cd %s; ", fileDir)
 
   local commit = vim.fn.system(cdDir .. "git log -1 --format=%H")
+  local branch = vim.fn.system(cdDir .. "git branch --show-current")
   local gitRoot = vim.fn.system(cdDir .. "git rev-parse --show-toplevel")
 
   local function strip_newlines(s)
@@ -12,12 +13,13 @@ local function get_git_info(path)
   end
 
   commit = strip_newlines(commit)
+  branch = strip_newlines(branch)
   gitRoot = strip_newlines(gitRoot)
   local fullPath = strip_newlines(path)
 
   local relative = fullPath:sub(#gitRoot + 2)
 
-  return commit, relative
+  return commit, branch, relative
 end
 
 local function get_remote_url()
@@ -78,7 +80,7 @@ local function is_github(remote_url)
   return string.match(remote_url, "github")
 end
 
-local function generate_url(remote_url, action, commit, relative, firstLine, lastLine)
+local function generate_url(remote_url, action, ref, relative, firstLine, lastLine)
   local url = ""
   local lineRange = ""
 
@@ -112,7 +114,7 @@ local function generate_url(remote_url, action, commit, relative, firstLine, las
 
   if is_github(remote_url) then
     lineRange = github_line_range(firstLine, lastLine)
-    url = github_url(remote_url) .. "/" .. action .. "/" .. commit .. "/" .. relative .. "#" .. lineRange
+    url = github_url(remote_url) .. "/" .. action .. "/" .. ref .. "/" .. relative .. "#" .. lineRange
   else
     error(
       "The remote: "
@@ -125,16 +127,22 @@ local function generate_url(remote_url, action, commit, relative, firstLine, las
   return url
 end
 
-function M.url(firstLine, lastLine, path, action)
+function M.url(firstLine, lastLine, path, action, mode)
   local remote_url = get_remote_url()
 
   if not remote_url then
     return
   end
 
-  local commit, relative = get_git_info(path)
+  local commit, branch, relative = M.get_git_info(path)
 
-  return generate_url(remote_url, action, commit, relative, firstLine, lastLine)
+  if mode == "commit" then
+    return generate_url(remote_url, action, commit, relative, firstLine, lastLine)
+  elseif mode == "branch" then
+    return generate_url(remote_url, action, branch, relative, firstLine, lastLine)
+  else
+    print("Please specify the reference type: commit or branch")
+  end
 end
 
 return M

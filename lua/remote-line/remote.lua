@@ -26,8 +26,8 @@ local function url_clipboard(url)
   end
 end
 
-function M.open(firstLine, lastLine, path, action)
-  local url = generate.url(firstLine, lastLine, path, action)
+function M.open(firstLine, lastLine, path, action, mode)
+  local url = generate.url(firstLine, lastLine, path, action, mode)
 
   if url == "" then
     return
@@ -36,8 +36,8 @@ function M.open(firstLine, lastLine, path, action)
   open_remote(url)
 end
 
-function M.copy(firstLine, lastLine, path, action)
-  local url = generate.url(firstLine, lastLine, path, action)
+function M.copy(firstLine, lastLine, path, action, mode)
+  local url = generate.url(firstLine, lastLine, path, action, mode)
 
   url_clipboard(url)
   print("success to copy the URL to clipboard")
