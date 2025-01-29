@@ -1,6 +1,6 @@
 local M = {}
 
-local function get_git_info(path)
+function M.get_git_info(path)
   local fileDir = vim.fn.expand("%:p:h")
   local cdDir = string.format("cd %s; ", fileDir)
 
@@ -125,16 +125,20 @@ local function generate_url(remote_url, action, commit, relative, firstLine, las
   return url
 end
 
-function M.url(firstLine, lastLine, path, action)
+function M.url(firstLine, lastLine, path, action, mode)
   local remote_url = get_remote_url()
 
   if not remote_url then
     return
   end
 
-  local commit, relative = get_git_info(path)
+  local commit, relative = M.get_git_info(path)
 
-  return generate_url(remote_url, action, commit, relative, firstLine, lastLine)
+  if mode == "" then
+    return generate_url(remote_url, action, commit, relative, firstLine, lastLine)
+  else
+    return generate_url(remote_url, action, mode, relative, firstLine, lastLine)
+  end
 end
 
 return M
