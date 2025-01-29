@@ -2,24 +2,24 @@ local remote = require("remote-line.remote")
 
 local M = {}
 
-local function select_option(buf, win, currentCursorLine, firstLine, path)
+local function select_option(buf, win, currentCursorLine, firstLine, path, mode)
   local row = vim.api.nvim_win_get_cursor(win)[1]
   local line = vim.api.nvim_buf_get_lines(buf, row - 1, row, false)[1]
 
   if line == "1. Open remote repository in blob" then
-    remote.open(currentCursorLine, firstLine, path, "blob")
+    remote.open(currentCursorLine, firstLine, path, "blob", mode)
   elseif line == "2. Copy remote repository URL" then
-    remote.copy(currentCursorLine, firstLine, path, "blob")
+    remote.copy(currentCursorLine, firstLine, path, "blob", mode)
   elseif line == "3. Open remote repository in blame" then
-    remote.open(currentCursorLine, firstLine, path, "blame")
+    remote.open(currentCursorLine, firstLine, path, "blame", mode)
   elseif line == "4. Open pull request the last changed commit" then
-    remote.open(currentCursorLine, firstLine, path, "pull")
+    remote.open(currentCursorLine, firstLine, path, "pull", mode)
   end
 
   vim.api.nvim_win_close(win, true)
 end
 
-function M.menu(firstLine, lastLine, path)
+function M.menu(firstLine, lastLine, path, mode)
   local content = {
     "1. Open remote repository in blob",
     "2. Copy remote repository URL",
@@ -44,7 +44,7 @@ function M.menu(firstLine, lastLine, path)
 
   vim.keymap.set("n", "q", ":q<CR>", { noremap = true, silent = true })
   vim.keymap.set("n", "<CR>", function()
-    select_option(buf, win, firstLine, lastLine, path)
+    select_option(buf, win, firstLine, lastLine, path, mode)
   end, { noremap = true, silent = true, buffer = buf })
 end
 
