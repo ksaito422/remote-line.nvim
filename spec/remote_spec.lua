@@ -65,6 +65,31 @@ describe("open", function()
   end)
 end)
 
+describe("when url is empty", function()
+  local M
+  local generate_mock
+
+  before_each(function()
+    M = require("remote-line.remote")
+    generate_mock = mock(require("remote-line.generate"), true)
+    generate_mock.url.returns("")
+  end)
+
+  it("should not call open command", function()
+    M.open(1, 10, "path/example", "blob", "")
+    assert.stub(vim.fn.system).was_not_called()
+  end)
+
+  it("should not call copy command", function()
+    M.copy(1, 10, "path/example", "blob", "")
+    assert.stub(vim.fn.system).was_not_called()
+  end)
+
+  after_each(function()
+    mock.revert(generate_mock)
+  end)
+end)
+
 describe("copy", function()
   local M
   local generate_mock
@@ -87,6 +112,7 @@ describe("copy", function()
     M.copy(1, 10, "path/example", "blob")
 
     assert.stub(vim.fn.system).was_called_with("echo 'http://example.com' | pbcopy")
+    assert.spy(print_exec).was_called_with("success to copy the URL to clipboard")
   end)
 
   it('should call "xclip" on unix', function()
@@ -98,6 +124,7 @@ describe("copy", function()
     M.copy(1, 10, "path/example", "blob")
 
     assert.stub(vim.fn.system).was_called_with("echo 'http://example.com' | xclip -selection clipboard")
+    assert.spy(print_exec).was_called_with("success to copy the URL to clipboard")
   end)
 
   it('should call "clip" on win32', function()
@@ -109,6 +136,7 @@ describe("copy", function()
     M.copy(1, 10, "path/example", "blob")
 
     assert.stub(vim.fn.system).was_called_with("echo 'http://example.com' | clip")
+    assert.spy(print_exec).was_called_with("success to copy the URL to clipboard")
   end)
 
   it('should print "Unsupported OS" for unknown OS', function()
