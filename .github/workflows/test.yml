@@ -20,7 +20,7 @@ jobs:
           version: "v0.10.3"
 
       - uses: ilammy/msvc-dev-cmd@v1
-      - uses: leafo/gh-actions-lua@v10
+      - uses: leafo/gh-actions-lua@v12
         with:
           luaVersion: '5.4'
 
