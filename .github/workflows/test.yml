@@ -12,7 +12,7 @@ jobs:
       matrix:
         os: [ubuntu-22.04, macos-latest, windows-latest]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - uses: rhysd/action-setup-vim@v1
         with:
